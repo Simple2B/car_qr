@@ -581,7 +581,8 @@
             </div>
 
             <div class="flex justify-center">
-                <form action="#" method="post" class="w-10/12 md:w-1/2">
+                <form action="{{ url_for('main.landing') }}" method="post" class="w-10/12 md:w-1/2">
+                    {{ form.hidden_tag() }}
                     <div class="doubled_inputs mt-3">
                         <div class="short_input_container short_input_container_left">
                             <input name="name"
@@ -590,7 +591,7 @@
                         </div>
 
                         <div class="short_input_container short_input_container_right">
-                            <input name="email"
+                            <input name="email" type="email"
                                 class="w-full m-1 p-5 rounded-lg bg-indigo-50 border-0 placeholder:text-gray-400"
                                 type="text" placeholder="Email">
                         </div>
@@ -599,11 +600,16 @@
                     <textarea class="w-full mt-5 ml-1 p-5 rounded-lg bg-indigo-50 border-0 placeholder:text-gray-400"
                         name="message" id="message" cols="30" rows="6" placeholder="Message"></textarea>
 
-
+                        
+                    
                     <div class="container">
-                        <button class="w-full mt-5 ml-1 bg-indigo-500 text-white font-semibold py-5 px-3 rounded-lg">
+                        <button type="submit" class="w-full mt-5 ml-1 bg-indigo-500 text-white font-semibold py-5 px-3 rounded-lg">
                             Send a Message
                         </button>
+                    </div>
+                    
+                    <div class="flex w-full justify-center mt-4">
+                        {{ form.recaptcha }}
                     </div>
                 </form>
             </div>
@@ -624,6 +630,7 @@
         <a href="{{ url_for('auth.login') }}">
             <p class="my-16 text-center">Login</p>
         </a>
+        
         <a href="{{ url_for('auth.register') }}" class="flex justify-center">
             <button class="w-11/12 mx-auto my-3 px-3 py-3 bg-indigo-500 rounded-xl text-white">Signup</button>
         </a>
@@ -631,6 +638,7 @@
 </body>
 
 <!-- <script src="https://anijs.github.io/lib/anijs/helpers/dom/anijs-helper-dom-min.js"></script> -->
+<script src='https://www.google.com/recaptcha/api.js?render={{ RECAPTCHA_PUBLIC_KEY }}' async defer></script>
 <script src="https://anijs.github.io/lib/anijs/anijs-min.js"></script>
 <script src="{{ url_for('static', filename='js/custom.js') }}" type="text/javascript" defer></script>
 

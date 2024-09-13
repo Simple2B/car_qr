@@ -81,11 +81,15 @@ def landing():
             email=form.email.data,
             message=form.message.data,
         )
-        mail.send(msg)
+        # mail.send(msg)
 
         flash("Your credentials are sent to admin", "success")
         return redirect(url_for("main.landing"))
     elif form.is_submitted():
         log(log.WARNING, "Form submitted error: [%s]", form.errors)
         flash("The given data was invalid.", "danger")
-    return render_template("landing.html")
+    return render_template(
+        "landing.html",
+        form=form,
+        RECAPTCHA_PUBLIC_KEY=app.config["RECAPTCHA_PUBLIC_KEY"],
+    )

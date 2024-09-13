@@ -64,6 +64,9 @@ class BaseConfig(BaseSettings, ABC):
     SUBSCRIPTIONS_EXPIRATION_CHECK_HOUR: int = 7
     DEVELOPERS_PASS: str | None = ""
 
+    RECAPTCHA_PUBLIC_KEY: str = ""
+    RECAPTCHA_PRIVATE_KEY: str = ""
+
     @staticmethod
     def configure(app: Flask):
         # Implement this method to do further configuration on your app.

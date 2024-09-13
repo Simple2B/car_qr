@@ -42,15 +42,16 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_label_views")),
     )
-    with op.batch_alter_table("labels", schema=None) as batch_op:
-        batch_op.add_column(sa.Column("location_id", sa.Integer(), nullable=True))
-        batch_op.create_foreign_key(
-            batch_op.f("fk_labels_location_id_label_locations"),
-            "label_locations",
-            ["location_id"],
-            ["id"],
-        )
-        batch_op.drop_column("views")
+
+    # with op.batch_alter_table('apscheduler_jobs', schema=None) as batch_op:
+    #     batch_op.drop_index('ix_apscheduler_jobs_next_run_time')
+
+    # op.drop_table('apscheduler_jobs')
+    # with op.batch_alter_table('labels', schema=None) as batch_op:
+    #     batch_op.add_column(sa.Column('location_id', sa.Integer(), nullable=True))
+    #     batch_op.create_foreign_key(batch_op.f('fk_labels_location_id_label_locations'), 'label_locations', ['location_id'], ['id'])
+    #     batch_op.drop_column('views')
+
 
     # ### end Alembic commands ###
 
@@ -71,6 +72,17 @@ def downgrade():
             batch_op.f("fk_labels_location_id_label_locations"), type_="foreignkey"
         )
         batch_op.drop_column("location_id")
+
+
+    # op.create_table('apscheduler_jobs',
+    # sa.Column('id', sa.VARCHAR(length=191), autoincrement=False, nullable=False),
+    # sa.Column('next_run_time', sa.DOUBLE_PRECISION(precision=53), autoincrement=False, nullable=True),
+    # sa.Column('job_state', postgresql.BYTEA(), autoincrement=False, nullable=False),
+    # sa.PrimaryKeyConstraint('id', name='apscheduler_jobs_pkey')
+    # )
+    # with op.batch_alter_table('apscheduler_jobs', schema=None) as batch_op:
+    #     batch_op.create_index('ix_apscheduler_jobs_next_run_time', ['next_run_time'], unique=False)
+
 
     op.drop_table("label_views")
     op.drop_table("label_locations")
